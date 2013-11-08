@@ -1,0 +1,6 @@
+while read public_address
+do
+
+scp -i keys/server_node.pem cassandra-topology.properties ubuntu@${public_address}:/home/ubuntu/
+
+done < address/public_address.txt

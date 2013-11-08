@@ -1,0 +1,11 @@
+while read public_address
+do
+
+ssh -i keys/server_node.pem ubuntu@$public_address -o StrictHostKeyChecking=no << 'ENDSSH'
+
+rm -r /var/lib/cassandra/data/*
+rm -r /var/lib/cassandra/saved_caches
+
+ENDSSH
+
+done < address/public_address.txt

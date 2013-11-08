@@ -1,0 +1,28 @@
+- MongoDB
+
+./bin/ycsb load mongodb -P workloads/workloada -p writeConcern=normal -p mongodb.url=192.168.56.1
+
+Nel caso errore di db esistente: use ycsb -> db.usertable.drop()
+
+- Cassandra
+
+nel cassandra-binding deve essere aggiunta la cartella log4j a org/apache/ ed anche impl a org/slf4j. Le cartelle possono essere prese dal jar di hbase-binding, che si trova sempre nella cartella YCSB, estraendolo. Aprire il jar di cassandra-binding con Archive Manager e aggiungere le cartelle dette.
+
+tramite ./bin/cassandra-cli -host ipNode, dare create keyspace usertable -> use usertable -> create column family data. Nota che il replication factor si definisce come UPDATE KEYSPACE demo
+						WITH strategy_options = {replication_factor:3};
+
+NOTA: il replication factor deve essere SEMPRE specificato per un corretto funzionamento con:
+	create keyspace usertable with placement_strategy ='org.apache.cassandra.locator.SimpleStrategy' and strategy_options = {replication_factor:2};
+
+./bin/ycsb load cassandra-10 -p hosts="ipNode" -P workloads/workloada > workloada_res.txt
+
+Nel caso errore di db esistente: drop keyspace usertable;
+
+- HBase
+
+da shell di hbase master eseguire prima create 'usertable', 'family'
+
+andare nella cartella del client-tester e modificare YCSB/hbase/src/main/conf/hbase-site.xml ponendo il quorum ed il master corretto. Infine, bisogna inserire l'ip del master e degli slaves, oltre al proprio(!!!) nel file hosts e dare una prima connessione (in modo da abilitare la connession a quell'ip)
+
+./bin/ycsb load hbase -P workloads/workloada -p hosts=192.168.56.11 -p columnfamily=family -p recordcount=1000
+

@@ -1,0 +1,1 @@
+i file con il nome MASTER all'interno devono essere opportunamente modificati con l'ip del nodo che fa da master (caso di mongo) o da create della tabella (cassandra e hbase)

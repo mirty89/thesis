@@ -1,0 +1,7 @@
+Quando si aggiungono/tolgono nodi, meglio cancellare tmp/ e rifare hadoop namenode -format
+
+il quorum prende il significato di quali nodi devono comunicare tra loro per un funzionamento più/meno solido del sistema. Tutti coloro che sono nel quorum devono poter avere accesso bidirezionale
+
+in ogni nodo sudo nano /etc/.ssh/ssh_config e decommentare 'StrictHostKey ask' mettendo 'no'
+
+
